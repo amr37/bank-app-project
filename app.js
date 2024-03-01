@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use(cors())
-const port = 3000
+const port = 4000
 
 // Custom debug logging function
 const debugLog = (message) => {
@@ -70,7 +70,10 @@ app.get('/user', (req, res) => {
 app.post('/movements', (req, res) => {
   debugLog('Received a movement request.')
   const token = req.query.token
-  const movement = req.body.movement
+  const movement = req.body
+
+  debugLog(`Token: ${token}`)
+  debugLog(`Movement: ${JSON.stringify(movement)}`)
 
   jwt.verify(token, 'secret_key', (err, decoded) => {
     if (err) {
@@ -83,16 +86,21 @@ app.post('/movements', (req, res) => {
     if (
       !movement ||
       typeof movement !== 'object' ||
-      !movement.hasOwnProperty('amount') ||
-      !movement.hasOwnProperty('date')
+      !movement.amount ||
+      !movement.date
     ) {
-      debugLog('Invalid movement object.')
-      return res.status(400).json({ message: 'Invalid movement object' })
+      debugLog(
+        'Invalid movement object it should be an object with properties amount and date'
+      )
+      return res.status(400).json({
+        message: 'Invalid movement object',
+      })
     }
 
     // Validate the amount field
-    if (typeof movement.amount !== 'number' || movement.amount <= 0) {
-      debugLog('Invalid amount.')
+    const amount = parseFloat(movement.amount)
+    if (isNaN(amount)) {
+      debugLog('Invalid amount it should be a number.')
       return res.status(400).json({ message: 'Invalid amount' })
     }
 
@@ -114,7 +122,7 @@ app.post('/movements', (req, res) => {
     if (accountIndex !== -1) {
       // Check if the requested amount is greater than the account balance
       if (
-        movement.amount >
+        amount >
         accounts[accountIndex].movements.reduce(
           (acc, movement) => acc + movement.amount,
           0
@@ -124,7 +132,7 @@ app.post('/movements', (req, res) => {
         return res.status(400).json({ message: 'Insufficient balance' })
       }
       accounts[accountIndex].movements.push({
-        amount: movement.amount,
+        amount,
         date: new Date().toISOString(),
       })
       debugLog('Movements updated successfully.')

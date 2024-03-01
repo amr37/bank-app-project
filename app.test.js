@@ -178,10 +178,7 @@ describe('Movements endpoint', () => {
   })
 
   it('should update movements successfully', (done) => {
-    const movement = {
-      movement: { amount: 100, date: new Date().toISOString() },
-      account: accounts[0],
-    }
+    const movement = { amount: 100, date: new Date().toISOString() }
     request(app)
       .post('/movements')
       .query({ token })
@@ -195,10 +192,8 @@ describe('Movements endpoint', () => {
   })
 
   it('should handle insufficient balance when taking money out', (done) => {
-    const invalidMovement = {
-      movement: { amount: 9999999, date: new Date().toISOString() },
-      account: accounts[0],
-    } // An amount greater than the balance
+    const invalidMovement = { amount: 9999999, date: new Date().toISOString() }
+    // An amount greater than the balance
     request(app)
       .post('/movements')
       .query({ token })
@@ -225,8 +220,8 @@ describe('Movements endpoint', () => {
 
   it('should handle invalid amount field', (done) => {
     const invalidAmountMovement = {
-      movement: { amount: 'invalid_amount', date: new Date().toISOString() },
-      account: accounts[0],
+      amount: 'invalid_amount',
+      date: new Date().toISOString(),
     }
     request(app)
       .post('/movements')
@@ -242,8 +237,8 @@ describe('Movements endpoint', () => {
 
   it('should handle invalid date field format', (done) => {
     const invalidDateFormatMovement = {
-      movement: { amount: 100, date: 'invalid_date_format' },
-      account: accounts[0],
+      amount: 100,
+      date: 'invalid_date_format',
     }
     request(app)
       .post('/movements')
