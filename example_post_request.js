@@ -4,6 +4,9 @@ async function postData(url = '', data = {}) {
   const response = await fetch(url, {
     method: 'POST', // GET por defecto
     body: JSON.stringify(data), // body data type must match "Content-Type" header
+    headers: {
+      'Content-Type': 'application/json',
+    },
   })
   return response.json() // parses JSON response into native JavaScript objects
 }
