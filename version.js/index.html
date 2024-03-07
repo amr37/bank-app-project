@@ -26,6 +26,7 @@
     <!-- NAVEGACIÓN SUPERIOR -->
     <nav>
       <p class="welcome">Hola,bien venida a tu cuenta bankaria </p>
+      <p class="registrar">por favour introduce tu usuario y contraseña </p>
       <img src="logo.png" alt="Logo" class="logo" />
       <form class="login">
         <input
@@ -61,7 +62,7 @@
         <div class="col-md-8">
           <nav>
             <div class="alert alert-warning" role="alert">
-              Usuario o contraseña incorrectos!
+              Usuario o contraseña no es correctos!
             </div>
           </nav>
         </div>
@@ -83,7 +84,7 @@
       <!-- MOVIMIENTOS -->
       <div class="movements">
         <div class="movements__row">
-          <div class="movements__type movements__type--deposit">2 depósito</div>
+          <div class="movements__type movements__type--deposit">5 depósito</div>
           <div class="movements__date">Hace 2 días</div>
           <div class="movements__value">2000€</div>
         </div>
@@ -109,19 +110,19 @@
 
       <!-- OPERACIÓN: TRANSFERENCIAS -->
       <div class="operation operation--transfer">
-        <h2>Transferir</h2>
+        <h2>Transferir dinero</h2>
         <form class="form form--transfer">
           <input type="text" class="form__input form__input--to" />
           <input type="number" class="form__input form__input--amount" />
           <button class="form__btn form__btn--transfer">&rarr;</button>
           <label class="form__label">Transfer a</label>
-          <label class="form__label">Monto</label>
+          <label class="form__label">cuantos</label>
         </form>
       </div>
 
       <!-- OPERACIÓN: PRÉSTAMO -->
       <div class="operation operation--loan">
-        <h2>Realizar ingresos o retiros</h2>
+        <h2>ingresar dinero </h2>
         <form class="form form--loan">
           <input type="number" class="form__input form__input--loan-amount" />
           <button class="form__btn form__btn--loan">&rarr;</button>
